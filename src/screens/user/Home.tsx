@@ -26,17 +26,17 @@ import { client } from "../../../App";
 const category = [
   {
     _id: "62fe244f58f7aa8230817f89",
-    title: "Garments",
+    title: "Grains",
     image: require("../../assets/icons/garments.png"),
   },
   {
     _id: "62fe243858f7aa8230817f86",
-    title: "Electornics",
+    title: "Fasting",
     image: require("../../assets/icons/electronics.png"),
   },
   {
     _id: "62fe241958f7aa8230817f83",
-    title: "Cosmentics",
+    title: "Health Related",
     image: require("../../assets/icons/cosmetics.png"),
   },
   {
@@ -47,17 +47,21 @@ const category = [
 ];
 
 const slides = [
-  require("../../assets/image/banners/banner.png"),
-  require("../../assets/image/banners/banner.png"),
+  require("../../assets/image/i1.jpg"),
+  require("../../assets/image/i2.jpg"),
 ];
 
-export default function Home() {
+export default function Home({navigation}) {
   const [cartproduct, setCartProduct] = useState([]);
   const [products, setProducts] = useState([]);
   const [refeshing, setRefreshing] = useState(false);
   const [error, setError] = useState("");
   const [userInfo, setUserInfo] = useState({});
   const [searchItems, setSearchItems] = useState([]);
+
+  
+    navigation.setOptions({headerShown: false});
+
 
   const ME_QUERY = gql`
     query {

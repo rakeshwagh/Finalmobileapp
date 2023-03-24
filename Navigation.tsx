@@ -6,7 +6,7 @@ import SignInStack from "./src/stack/SignInStack";
 import SignOutStack from "./src/stack/SignOutStack";
 
 export default function Navigation() {
-  let isAuthenticated = false;
+  let isAuthenticated = true;
   return (
     <NavigationContainer>
       {isAuthenticated ? <SignInStack /> : <SignOutStack />}

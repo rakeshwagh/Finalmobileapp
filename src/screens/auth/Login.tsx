@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { colors, network } from "../../constants";
 import CustomInput from "../../components/CustomInput";
 import header_logo from "../../assets/logo/logo.png";
@@ -17,12 +17,41 @@ import CustomAlert from "../../components/CustomAlert/CustomAlert";
 import ProgressDialog from "react-native-progress-dialog";
 import InternetConnectionAlert from "react-native-internet-connection-alert";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { client } from "../../../App";
+import { gql } from "@apollo/client";
+
+// const ME_QUERY = gql`
+//   query {
+//     me {
+//       name
+//       email
+//       uid
+//       email_verified
+//       phone_number
+//     }
+//   }
+// `;
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isloading, setIsloading] = useState(false);
+
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     try {
+  //       const { error, data, loading } = await client.query({
+  //         query: ME_QUERY,
+  //       });
+  //       console.log(error);
+  //       console.log(data);
+  //     } catch (err) {
+  //       console.log(JSON.stringify(err));
+  //     }
+  //   };
+  //   getUser();
+  // }, []);
 
   const loginHandle = () => {};
   return (

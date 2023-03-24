@@ -16,15 +16,82 @@ import CustomButton from "../../components/CustomButton";
 import { Ionicons } from "@expo/vector-icons";
 import CustomAlert from "../../components/CustomAlert/CustomAlert";
 import InternetConnectionAlert from "react-native-internet-connection-alert";
+import { gql, useMutation } from "@apollo/client";
+
+const REGISTER_QUERY = gql`
+  mutation RegisterUser(
+    $name: String!
+    $email: String!
+    $password: String!
+    $phone: String!
+  ) {
+    register(
+      createUser: {
+        name: $name
+        email: $email
+        password: $password
+        phone: $phone
+      }
+    ) {
+      id
+      email
+    }
+  }
+`;
 
 export default function Register({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [name, setName] = useState("");
+  const [name, setName] = useState("Prathamesh");
+  const [email, setEmail] = useState("temp@gmail.com");
+  const [phone, setPhone] = useState("8669661662");
+  const [password, setPassword] = useState("Pramo@625");
+  const [confirmPassword, setConfirmPassword] = useState("Pramo@625");
   const [error, setError] = useState("");
 
-  const signUpHandle = () => {};
+  const [registerUser, { loading, error: queryError }] = useMutation(
+    REGISTER_QUERY,
+    {
+      onCompleted: (data) => {
+        console.log(data);
+        alert("You have successfully registered.");
+        // navigation.navigate("login");
+      },
+      onError: (queryError) => {
+        console.log(JSON.stringify(queryError, null, 2));
+        setError(queryError.message + queryError.name);
+      },
+    }
+  );
+
+  const signUpHandle = async () => {
+    if (email == "") {
+      return setError("Please enter your email");
+    }
+    if (name == "") {
+      return setError("Please enter your name");
+    }
+    if (password == "") {
+      return setError("Please enter your password");
+    }
+    if (!email.includes("@") || !email.includes(".")) {
+      return setError("Email is not valid");
+    }
+    if (email.length < 6) {
+      return setError("Email is too short");
+    }
+    if (phone.length < 10) {
+      return setError("Phone Number is too short");
+    }
+    if (password.length < 5) {
+      return setError("Password must be 6 characters long");
+    }
+    if (password != confirmPassword) {
+      return setError("password does not match");
+    }
+
+    console.log("Hello World");
+    await registerUser({ variables: { name, email, password, phone } });
+  };
+
   return (
     <InternetConnectionAlert
       onChange={(connectionState) => {
@@ -74,6 +141,13 @@ export default function Register({ navigation }) {
               value={email}
               setValue={setEmail}
               placeholder={"Email"}
+              placeholderTextColor={colors.muted}
+              radius={5}
+            />
+            <CustomInput
+              value={phone}
+              setValue={setPhone}
+              placeholder={"Phone"}
               placeholderTextColor={colors.muted}
               radius={5}
             />

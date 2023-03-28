@@ -3,6 +3,7 @@ import Navigation from "./Navigation";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { network } from "./src/constants";
 
+
 export const client = new ApolloClient({
   uri: `${network.serverip}/graphql`,
   cache: new InMemoryCache(),
